@@ -18,15 +18,13 @@ class Home extends Component {
     }
     componentDidMount() {
         this.lock = new Auth0Lock(process.env.REACT_APP_AUTH0_CLIENT_ID, process.env.REACT_APP_AUTH0_DOMAIN);
-        this
-            .lock.on('authenticated', authResult => {
-                this.lock.getUserInfo(authResult.accessToken, (error, user) => {
+        this.lock.on('authenticated', authResult => {
+            this.lock.getUserInfo(authResult.accessToken, (error, user) => {
                         
-                    axios.post('/login', {userId: user.sub})
+                axios.post('/login', {userId: user.sub})
                             .then(response => {
-
-                                this.props.login(response.data.user);
-                                this.props.history.push('/private');
+                        this.props.login(response.data.user);
+                        this.props.history.push('/private');
                             })
                     })
 
